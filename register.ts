@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import bcrypt from 'bcrypt';
 
-export function register(formData: FormData) {
+export async function register(formData: FormData) {
     const parsedFormData = z
         .object({ email: z.string().email(), password: z.string().min(6) })
         .safeParse(Object.fromEntries(formData.entries()));
