@@ -4,20 +4,24 @@ import {
   UserGroupIcon,
   HomeIcon,
   DocumentDuplicateIcon,
+  ShoppingCartIcon,
+  Cog6ToothIcon
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
 // Map of links to display in the side navigation.
-// Depending on the size of the application, this would be stored in a database.
+// Deprocessed on the size of the application, this would be stored in a database.
 const links = [
   { name: 'Home', href: '/dashboard', icon: HomeIcon },
   {
-    name: 'Invoices',
-    href: '/dashboard/invoices',
+    name: 'Orders',
+    href: '/dashboard/orders',
     icon: DocumentDuplicateIcon,
   },
-  { name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon },
+  {name: 'Products', href: '/dashboard/products', icon: ShoppingCartIcon },
+  {name: 'Settings', href: '/dashboard/settings', icon: Cog6ToothIcon },
+
 ];
 
 export default function NavLinks() {

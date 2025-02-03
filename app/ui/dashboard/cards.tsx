@@ -9,26 +9,26 @@ import { lusitana } from '@/app/ui/fonts';
 const iconMap = {
   collected: BanknotesIcon,
   customers: UserGroupIcon,
-  pending: ClockIcon,
+  processed: ClockIcon,
   invoices: InboxIcon,
 };
 
 import { fetchCardData } from '@/app/lib/data';
 
 export default async function CardWrapper() {
-  const {numberOfInvoices, numberOfCustomers, totalPaidInvoices, totalPendingInvoices} = await fetchCardData();
+  const {numberOfInvoices, numberOfCustomers, totalSentInvoices, totalProcessedInvoices} = await fetchCardData();
   return (
     <>
       {/* NOTE: Uncomment this code in Chapter 9 */}
 
-      <Card title="Collected" value={totalPaidInvoices} type="collected" />
-      <Card title="Pending" value={totalPendingInvoices} type="pending" />
-      <Card title="Total Invoices" value={numberOfInvoices} type="invoices" />
-      <Card
+      <Card title="Collected" value={totalSentInvoices} type="collected" />
+      {/* <Card title="Processed" value={totalProcessedInvoices} type="processed" /> */}
+      <Card title="Total Orders" value={numberOfInvoices} type="invoices" />
+      {/* <Card
         title="Total Customers"
         value={numberOfCustomers}
         type="customers"
-      />
+      /> */}
     </>
   );
 }
@@ -40,7 +40,7 @@ export function Card({
 }: {
   title: string;
   value: number | string;
-  type: 'invoices' | 'customers' | 'pending' | 'collected';
+  type: 'invoices' | 'customers' | 'processed' | 'collected';
 }) {
   const Icon = iconMap[type];
 

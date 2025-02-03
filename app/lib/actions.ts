@@ -4,8 +4,9 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import { signIn } from '@/auth';
+import { signIn, getUser } from '@/auth';
 import { AuthError } from 'next-auth';
+import { register } from '@/register';
 
 const FormSchema = z.object({
   id: z.string(),
@@ -13,7 +14,7 @@ const FormSchema = z.object({
     invalid_type_error: 'Please select a customer.',
   }),
   amount: z.coerce.number().gt(0, { message: 'Please enter an amount greater than $0.' }),
-  status: z.enum(['pending', 'paid'],  {invalid_type_error: 'Please select an invoice status.',}),
+  status: z.enum(['processed', 'sent'],  {invalid_type_error: 'Please select an order status.',}),
   date: z.string(),
 });
  
@@ -49,6 +50,24 @@ export async function authenticate(
   }
 }
 
+export async function authRegister(
+  prevState: string | undefined,
+  formData: FormData,
+) {
+  if (formData.get('password') !== formData.get('confirmpassword')) {
+    return 'Passwords do not match.';
+  }
+  if (await getUser(formData.get('email'))) {
+    return 'User already exists.';
+  }
+  try {
+    await register(formData);
+  } catch (error) {
+    return 'Something went wrong.';
+  }
+}
+
+
 export async function createInvoice(prevState: State, formData: FormData) {
   // Validate form using Zod
   const validatedFields = CreateInvoice.safeParse({
@@ -61,7 +80,7 @@ export async function createInvoice(prevState: State, formData: FormData) {
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Create Invoice.',
+      message: 'Missing Fields. Failed to Create Order.',
     };
   }
  
@@ -84,8 +103,8 @@ export async function createInvoice(prevState: State, formData: FormData) {
   }
  
   // Revalidate the cache for the invoices page and redirect the user.
-  revalidatePath('/dashboard/invoices');
-  redirect('/dashboard/invoices');
+  revalidatePath('/dashboard/orders');
+  redirect('/dashboard/orders');
 }
 
 export async function updateInvoice(
@@ -102,7 +121,7 @@ export async function updateInvoice(
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Update Invoice.',
+      message: 'Missing Fields. Failed to Update Order.',
     };
   }
  
@@ -119,12 +138,12 @@ export async function updateInvoice(
     return { message: 'Database Error: ', error, };
   }
  
-  revalidatePath('/dashboard/invoices');
-  redirect('/dashboard/invoices');
+  revalidatePath('/dashboard/orders');
+  redirect('/dashboard/orders');
 }
 
 export async function deleteInvoice(id: string) {
 
     await sql`DELETE FROM invoices WHERE id = ${id}`;
-    revalidatePath('/dashboard/invoices');
+    revalidatePath('/dashboard/orders');
 }

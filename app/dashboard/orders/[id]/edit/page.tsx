@@ -1,12 +1,12 @@
-import Form from '@/app/ui/invoices/edit-form';
-import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
+import Form from '@/app/ui/orders/edit-form';
+import Breadcrumbs from '@/app/ui/orders/breadcrumbs';
 import { fetchInvoiceById, fetchCustomers } from '@/app/lib/data';
  
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next'; 
 
 export const metadata: Metadata = {
-  title: 'Edit Invoice',
+  title: 'Edit Order',
 };
 export default async function Page(props: { params: Promise<{ id: string }> }) {
     const params = await props.params;
@@ -22,10 +22,10 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: 'Invoices', href: '/dashboard/invoices' },
+          { label: 'Orders', href: '/dashboard/orders' },
           {
-            label: 'Edit Invoice',
-            href: `/dashboard/invoices/${id}/edit`,
+            label: 'Edit Order',
+            href: `/dashboard/orders/${id}/edit`,
             active: true,
           },
         ]}
