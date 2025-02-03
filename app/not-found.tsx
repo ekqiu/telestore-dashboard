@@ -5,7 +5,7 @@ import { lusitana } from '@/app/ui/fonts';
 import { Metadata } from 'next'; 
 
 export const metadata: Metadata = {
-  title: 'Contact',
+  title: '404',
 };
 export default function Page() {
   return (
@@ -30,10 +30,10 @@ export default function Page() {
       <div className="relative mx-auto w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32 flex items-center justify-center md:h-screen">
         <div className="rounded-lg bg-gray-50 px-6 pb-4 pt-8">
           <h1 className={`${lusitana.className} mb-3 text-2xl`}>
-            Page Under Maintenance
+            404 - Page Not Found
           </h1>
           <p className="text-gray-500">
-            We're still working on this page. In the meantime, you can write in to us at <a href="mailto:help@evankhee.com" className='text-blue-500'>our support email</a> for help, or send us a DM on <a href="https://www.instagram.com/ekqiutech" className='text-blue-500'>our Instagram</a>. We thank you for your patience. ❤️
+            The page you are looking for does not exist, let us take you back.
           </p>
           <Link
               href="/"

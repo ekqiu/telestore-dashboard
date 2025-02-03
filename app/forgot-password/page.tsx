@@ -13,7 +13,7 @@ export default function LoginPage() {
         </div>
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
         <h1 className={`${lusitana.className} mb-3 text-2xl`}>
-          Feature Not Found
+          Feature Under Maintenance
         </h1>
         <p className="text-gray-500">
           We're still working on this feature. In the meantime, you can write in to us at <a href="mailto:help@evankhee.com" className='text-blue-500'>our support email</a> for help, or send us a DM on <a href="https://www.instagram.com/ekqiutech" className='text-blue-500'>our Instagram</a>. We thank you for your patience. ❤️
