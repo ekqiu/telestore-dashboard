@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import bcrypt from 'bcrypt';
+import { getUser } from '@/auth';
 
 export async function register(formData: FormData) {
     const parsedFormData = z

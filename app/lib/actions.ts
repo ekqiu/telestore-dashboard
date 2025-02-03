@@ -57,7 +57,8 @@ export async function authRegister(
   if (formData.get('password') !== formData.get('confirmpassword')) {
     return 'Passwords do not match.';
   }
-  if (await getUser(formData.get('email'))) {
+  const email = formData.get('email');
+  if (typeof email === 'string' && await getUser(email)) {
     return 'User already exists.';
   }
   try {
