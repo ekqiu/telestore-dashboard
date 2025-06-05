@@ -1,4 +1,4 @@
-import AcmeLogo from '@/app/ui/acme-logo';
+import TeleStoreLogo from '@/app/ui/telestore-logo';
 import { lusitana } from '@/app/ui/fonts';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
@@ -8,7 +8,7 @@ export default function LoginPage() {
       <div className="relative mx-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32">
         <div className="flex h-20 w-full items-end rounded-lg bg-blue-500 p-3">
           <div className="w-50 text-white md:w-60">
-            <AcmeLogo />
+            <TeleStoreLogo />
           </div>
         </div>
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">

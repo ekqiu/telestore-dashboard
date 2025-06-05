@@ -19,6 +19,7 @@ const links = [
     href: '/dashboard/orders',
     icon: DocumentDuplicateIcon,
   },
+  {name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon },
   {name: 'Products', href: '/dashboard/products', icon: ShoppingCartIcon },
   {name: 'Settings', href: '/dashboard/settings', icon: Cog6ToothIcon },
 

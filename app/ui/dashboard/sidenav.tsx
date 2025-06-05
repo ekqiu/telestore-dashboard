@@ -1,5 +1,5 @@
 import NavLinks from '@/app/ui/dashboard/nav-links';
-import AcmeLogo from '@/app/ui/acme-logo';
+import TeleStoreLogo from '@/app/ui/telestore-logo';
 import { PowerIcon } from '@heroicons/react/24/outline';
 import { signOut } from '@/auth';
 
@@ -10,7 +10,7 @@ export default function SideNav() {
         className="mb-2 flex h-20 items-end justify-start rounded-md bg-blue-600 p-4 md:h-40"
       >
         <div className="w-50 text-white md:w-60">
-          <AcmeLogo />
+          <TeleStoreLogo />
         </div>
       </div>
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">

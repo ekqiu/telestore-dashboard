@@ -112,7 +112,7 @@ export function TableRowSkeleton() {
           <div className="h-6 w-24 rounded bg-gray-100"></div>
         </div>
       </td>
-      {/* Email */}
+      {/* telegram */}
       <td className="whitespace-nowrap px-3 py-3">
         <div className="h-6 w-32 rounded bg-gray-100"></div>
       </td>
@@ -183,7 +183,7 @@ export function InvoicesTableSkeleton() {
                   Customer
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Email
+                  Telegram
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
                   Amount
