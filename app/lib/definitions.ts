@@ -7,6 +7,9 @@ export type User = {
   name: string;
   email: string;
   password: string;
+  verified: boolean;
+  created_at: string;
+  organisation_id: string;
 };
 
 export type Customer = {
@@ -23,7 +26,8 @@ export type Invoice = {
   date: string;
   // In TypeScript, this is called a string union type.
   // It means that the "status" property can only be one of the two strings: 'processed' or 'sent'.
-  status: 'processed' | 'sent';
+  status: 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled' | 'returned' | 'refunded';
+  organisation_id: string;
 };
 
 export type Revenue = {
@@ -52,8 +56,8 @@ export type InvoicesTable = {
   image_url: string;
   date: string;
   amount: number;
-  status: 'processed' | 'sent';
-};
+  status: 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled' | 'returned' | 'refunded';
+  };
 
 export type CustomersTableType = {
   id: string;
@@ -84,5 +88,5 @@ export type InvoiceForm = {
   id: string;
   customer_id: string;
   amount: number;
-  status: 'processed' | 'sent';
-};
+  status: 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled' | 'returned' | 'refunded';
+  };

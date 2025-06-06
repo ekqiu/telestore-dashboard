@@ -8,6 +8,7 @@ import {
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
+import { getCurrentUser } from '@/auth';
 
 export async function fetchRevenue() {
   try {
@@ -22,10 +23,13 @@ export async function fetchRevenue() {
 
 export async function fetchLatestInvoices() {
   try {
+    const user = await getCurrentUser();
+    const organisationId = user?.organisation_id;
     const data = await sql<LatestInvoiceRaw>`
       SELECT invoices.amount, customers.name, customers.image_url, customers.telegram, invoices.id
       FROM invoices
       JOIN customers ON invoices.customer_id = customers.id
+      WHERE invoices.organisation_id = ${organisationId}
       ORDER BY invoices.date DESC
       LIMIT 5`;
 
@@ -42,15 +46,26 @@ export async function fetchLatestInvoices() {
 
 export async function fetchCardData() {
   try {
-    // You can probably combine these into a single SQL query
-    // However, we are intentionally splitting them to demonstrate
-    // how to initialize multiple queries in parallel with JS.
-    const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;
-    const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
-    const invoiceStatusPromise = sql`SELECT
-         SUM(CASE WHEN status = 'sent' THEN amount ELSE 0 END) AS "sent",
-         SUM(CASE WHEN status = 'processed' THEN amount ELSE 0 END) AS "processed"
-         FROM invoices`;
+    const user = await getCurrentUser();
+    const organisationId = user?.organisation_id;
+
+    const invoiceCountPromise = sql`
+      SELECT COUNT(*) FROM invoices
+      WHERE organisation_id = ${organisationId}
+    `;
+    const customerCountPromise = sql`
+      SELECT COUNT(DISTINCT customer_id) FROM invoices
+      WHERE organisation_id = ${organisationId}
+    `;
+    const invoiceStatusPromise = sql`
+      SELECT
+        SUM(CASE WHEN status = 'confirmed' THEN amount ELSE 0 END) AS "confirmed",
+        SUM(CASE WHEN status = 'processing' THEN amount ELSE 0 END) AS "processing",
+        SUM(CASE WHEN status = 'shipped' THEN amount ELSE 0 END) AS "shipped",
+        SUM(CASE WHEN status = 'delivered' THEN amount ELSE 0 END) AS "delivered"
+      FROM invoices
+      WHERE organisation_id = ${organisationId}
+    `;
 
     const data = await Promise.all([
       invoiceCountPromise,
@@ -60,14 +75,17 @@ export async function fetchCardData() {
 
     const numberOfInvoices = Number(data[0].rows[0].count ?? '0');
     const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
-    const totalSentInvoices = formatCurrency(data[2].rows[0].sent ?? '0');
-    const totalProcessedInvoices = formatCurrency(data[2].rows[0].processed ?? '0');
+    const totalInvoices = formatCurrency(
+        Number(data[2].rows[0].confirmed ?? 0) +
+        Number(data[2].rows[0].processing ?? 0) +
+        Number(data[2].rows[0].shipped ?? 0) +
+        Number(data[2].rows[0].delivered ?? 0)
+      );
 
     return {
       numberOfCustomers,
       numberOfInvoices,
-      totalSentInvoices,
-      totalProcessedInvoices,
+      totalInvoices,
     };
   } catch (error) {
     console.error('Database Error:', error);
@@ -83,6 +101,9 @@ export async function fetchFilteredInvoices(
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
+    const user = await getCurrentUser();
+    const organisationId = user?.organisation_id;
+
     const invoices = await sql<InvoicesTable>`
       SELECT
         invoices.id,
@@ -95,11 +116,13 @@ export async function fetchFilteredInvoices(
       FROM invoices
       JOIN customers ON invoices.customer_id = customers.id
       WHERE
-        customers.name ILIKE ${`%${query}%`} OR
-        customers.telegram ILIKE ${`%${query}%`} OR
-        invoices.amount::text ILIKE ${`%${query}%`} OR
-        invoices.date::text ILIKE ${`%${query}%`} OR
-        invoices.status ILIKE ${`%${query}%`}
+        invoices.organisation_id = ${organisationId} AND (
+          customers.name ILIKE ${`%${query}%`} OR
+          customers.telegram ILIKE ${`%${query}%`} OR
+          invoices.amount::text ILIKE ${`%${query}%`} OR
+          invoices.date::text ILIKE ${`%${query}%`} OR
+          invoices.status ILIKE ${`%${query}%`}
+        )
       ORDER BY invoices.date DESC
       LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
     `;
@@ -113,16 +136,22 @@ export async function fetchFilteredInvoices(
 
 export async function fetchInvoicesPages(query: string) {
   try {
-    const count = await sql`SELECT COUNT(*)
-    FROM invoices
-    JOIN customers ON invoices.customer_id = customers.id
-    WHERE
-      customers.name ILIKE ${`%${query}%`} OR
-      customers.telegram ILIKE ${`%${query}%`} OR
-      invoices.amount::text ILIKE ${`%${query}%`} OR
-      invoices.date::text ILIKE ${`%${query}%`} OR
-      invoices.status ILIKE ${`%${query}%`}
-  `;
+    const user = await getCurrentUser();
+    const organisationId = user?.organisation_id;
+
+    const count = await sql`
+      SELECT COUNT(*)
+      FROM invoices
+      JOIN customers ON invoices.customer_id = customers.id
+      WHERE
+        invoices.organisation_id = ${organisationId} AND (
+          customers.name ILIKE ${`%${query}%`} OR
+          customers.telegram ILIKE ${`%${query}%`} OR
+          invoices.amount::text ILIKE ${`%${query}%`} OR
+          invoices.date::text ILIKE ${`%${query}%`} OR
+          invoices.status ILIKE ${`%${query}%`}
+        )
+    `;
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
     return totalPages;
@@ -134,6 +163,9 @@ export async function fetchInvoicesPages(query: string) {
 
 export async function fetchInvoiceById(id: string) {
   try {
+    const user = await getCurrentUser();
+    const organisationId = user?.organisation_id;
+
     const data = await sql<InvoiceForm>`
       SELECT
         invoices.id,
@@ -141,7 +173,8 @@ export async function fetchInvoiceById(id: string) {
         invoices.amount,
         invoices.status
       FROM invoices
-      WHERE invoices.id = ${id};
+      WHERE invoices.id = ${id}
+        AND invoices.organisation_id = ${organisationId};
     `;
 
     const invoice = data.rows.map((invoice) => ({
@@ -149,13 +182,15 @@ export async function fetchInvoiceById(id: string) {
       // Convert amount from cents to dollars
       amount: invoice.amount / 100,
     }));
-    
+
     return invoice[0];
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch invoice.');
   }
 }
+
+// update below to be filtered by organisation_id
 
 export async function fetchCustomers() {
   try {

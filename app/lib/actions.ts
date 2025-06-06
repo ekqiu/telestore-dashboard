@@ -14,7 +14,7 @@ const FormSchema = z.object({
     invalid_type_error: 'Please select a customer.',
   }),
   amount: z.coerce.number().gt(0, { message: 'Please enter an amount greater than $0.' }),
-  status: z.enum(['processed', 'sent'],  {invalid_type_error: 'Please select an order status.',}),
+  status: z.enum(['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled', 'returned', 'refunded'],  {invalid_type_error: 'Please select an order status.',}),
   date: z.string(),
 });
  

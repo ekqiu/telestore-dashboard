@@ -1,16 +1,24 @@
 'use client';
 
 import { CustomerField, InvoiceForm } from '@/app/lib/definitions';
+import Link from 'next/link';
+import { Button } from '@/app/ui/button';
+import { updateInvoice, State } from '@/app/lib/actions';
+import { useActionState } from 'react';
+
 import {
   CheckIcon,
   ClockIcon,
   CurrencyDollarIcon,
   UserCircleIcon,
+  ArrowPathIcon,
+  TruckIcon,
+  ArrowDownTrayIcon,
+  XCircleIcon,
+  ArrowUturnLeftIcon,
+  ArrowLeftOnRectangleIcon,
 } from '@heroicons/react/24/outline';
-import Link from 'next/link';
-import { Button } from '@/app/ui/button';
-import { updateInvoice, State } from '@/app/lib/actions';
-import { useActionState } from 'react';
+
 
 export default function EditInvoiceForm({
   invoice,
@@ -22,8 +30,21 @@ export default function EditInvoiceForm({
   const initialState: State = { message: null, errors: {} };
   const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
   const [state, formAction] = useActionState(updateInvoiceWithId, initialState);
- 
-  return <form action={formAction}>
+
+  // List of statuses and their display info
+  const statuses = [
+    { value: 'pending', label: 'Pending', icon: ClockIcon, color: 'bg-yellow-100 text-yellow-800' },
+    { value: 'confirmed', label: 'Confirmed', icon: CheckIcon, color: 'bg-blue-100 text-blue-800' },
+    { value: 'processing', label: 'Processing', icon: ArrowPathIcon, color: 'bg-purple-100 text-purple-800' },
+    { value: 'shipped', label: 'Shipped', icon: TruckIcon, color: 'bg-indigo-100 text-indigo-800' },
+    { value: 'delivered', label: 'Delivered', icon: ArrowDownTrayIcon, color: 'bg-green-100 text-green-800' },
+    { value: 'cancelled', label: 'Cancelled', icon: XCircleIcon, color: 'bg-red-100 text-red-800' },
+    { value: 'returned', label: 'Returned', icon: ArrowUturnLeftIcon, color: 'bg-orange-100 text-orange-800' },
+    { value: 'refunded', label: 'Refunded', icon: ArrowLeftOnRectangleIcon, color: 'bg-gray-100 text-gray-800' },
+  ];
+
+  return (
+    <form action={formAction}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
@@ -77,46 +98,32 @@ export default function EditInvoiceForm({
             Set the invoice status
           </legend>
           <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
-            <div className="flex gap-4">
-              <div className="flex items-center">
-                <input
-                  id="processed"
-                  name="status"
-                  type="radio"
-                  value="processed"
-                  defaultChecked={invoice.status === 'processed'}
-                  className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
-                />
-                <label
-                  htmlFor="processed"
-                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600"
-                >
-                  Processed <ClockIcon className="h-4 w-4" />
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  id="sent"
-                  name="status"
-                  type="radio"
-                  value="sent"
-                  defaultChecked={invoice.status === 'sent'}
-                  className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
-                />
-                <label
-                  htmlFor="sent"
-                  className="ml-2 flex cursor-pointer items-center gap-1.5 rounded-full bg-green-500 px-3 py-1.5 text-xs font-medium text-white"
-                >
-                  Sent <CheckIcon className="h-4 w-4" />
-                </label>
-              </div>
+            <div className="flex flex-wrap gap-4">
+              {statuses.map(({ value, label, icon: Icon, color }) => (
+                <div className="flex items-center" key={value}>
+                  <input
+                    id={value}
+                    name="status"
+                    type="radio"
+                    value={value}
+                    defaultChecked={invoice.status === value}
+                    className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
+                  />
+                  <label
+                    htmlFor={value}
+                    className={`ml-2 flex cursor-pointer items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium ${color}`}
+                  >
+                    {label} <Icon className="h-4 w-4" />
+                  </label>
+                </div>
+              ))}
             </div>
           </div>
         </fieldset>
       </div>
       <div className="mt-6 flex justify-end gap-4">
         <Link
-          href="/dashboard/invoices"
+          href="/dashboard/orders"
           className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
         >
           Cancel
@@ -124,4 +131,5 @@ export default function EditInvoiceForm({
         <Button type="submit">Edit Invoice</Button>
       </div>
     </form>
+  );
 }

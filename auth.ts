@@ -15,6 +15,12 @@ export async function getUser(email: string): Promise<User | undefined> {
     throw new Error('Failed to fetch user.');
   }
 }
+
+export async function getCurrentUser() {
+  const session = await auth();
+  if (!session?.user?.email) return null;
+  return getUser(session.user.email);
+}
  
 export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
