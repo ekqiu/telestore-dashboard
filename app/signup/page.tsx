@@ -1,6 +1,6 @@
 import TeleStoreLogo from '@/app/ui/telestore-logo';
-import LoginForm from '@/app/ui/signup-form';
-import SignUpLink from '@/app/ui/login-link';
+import SignUpForm from '@/app/ui/signup-form';
+import LoginLink from '@/app/ui/login-link';
  
 export default function SignUpPage() {
   return (
@@ -11,8 +11,8 @@ export default function SignUpPage() {
             <TeleStoreLogo />
           </div>
         </div>
-        <LoginForm />
-        <SignUpLink />
+        <SignUpForm />
+        <LoginLink />
       </div>
     </main>
   );

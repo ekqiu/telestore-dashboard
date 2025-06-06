@@ -63,8 +63,10 @@ export async function authRegister(
   }
   try {
     await register(formData);
+    return 'Registration successful!';
   } catch (error) {
-    return 'Something went wrong.';
+    console.error(error);
+    return 'Something went wrong, contact support.';
   }
 }
 
