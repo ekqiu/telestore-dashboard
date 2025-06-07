@@ -1,34 +1,41 @@
-import TeleStoreLogo from '@/app/ui/telestore-logo';
-import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
-import { lusitana } from '@/app/ui/fonts';
-import { Metadata } from 'next'; 
 import Header from '@/app/ui/header';
-import Head from 'next/head';
+import Footer from '@/app/ui/footer';
+import { EnvelopeIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
+import { CameraIcon } from '@heroicons/react/24/solid';
 
-export const metadata: Metadata = {
-  title: 'Contact',
-};
 export default function Page() {
   return (
-    <main className="flex min-h-screen flex-col p-6">
+    <main className="flex min-h-screen flex-col bg-gradient-to-br from-blue-50 to-white p-6">
       <Header />
-      <div className="relative mx-auto w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32 flex items-center justify-center md:h-screen">
-        <div className="rounded-lg bg-gray-50 px-6 pb-4 pt-8">
-          <h1 className={`${lusitana.className} mb-3 text-2xl`}>
-            Page Under Maintenance
-          </h1>
-          <p className="text-gray-500">
-            We're still working on this page. In the meantime, you can write in to us at <a href="mailto:help@evankhee.com" className='text-blue-500'>our support email</a> for help, or send us a DM on <a href="https://www.instagram.com/ekqiutech" className='text-blue-500'>our Instagram</a>. We thank you for your patience. ❤️
+      <section className="flex flex-1 items-center justify-center pt-6">
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-10 flex flex-col items-center text-center">
+          <h2 className="text-3xl font-bold text-blue-700 mb-2">Contact Us</h2>
+          <p className="text-gray-600 mb-8">
+            We’d love to hear from you. Reach out anytime.
           </p>
-          <Link
-              href="/"
-              className="flex items-center gap-5 self-start rounded-lg bg-blue-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base mt-4"
-            >
-              <span>Back Home</span> <ArrowRightIcon className="w-5 md:w-6" />
-            </Link>
+          <div className="space-y-6 w-full">
+            <div className="flex items-center justify-center gap-3">
+              <EnvelopeIcon className="w-6 h-6 text-blue-500" />
+              <a href="mailto:help@evankhee.com" className="text-blue-600 underline">
+                help@evankhee.com
+              </a>
+            </div>
+            <div className="flex items-center justify-center gap-3">
+              <PaperAirplaneIcon className="w-6 h-6 text-blue-500" />
+              <a href="https://t.me/yourtelegram" className="text-blue-600 underline" target="_blank" rel="noopener noreferrer">
+                Telegram
+              </a>
+            </div>
+            <div className="flex items-center justify-center gap-3">
+              <CameraIcon className="w-6 h-6 text-pink-500" />
+              <a href="https://instagram.com/yourinstagram" className="text-pink-600 underline" target="_blank" rel="noopener noreferrer">
+                Instagram
+              </a>
+            </div>
           </div>
         </div>
+      </section>
+      <Footer />
     </main>
   );
 }
