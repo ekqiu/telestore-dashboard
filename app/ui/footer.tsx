@@ -51,14 +51,14 @@ export default function Footer() {
                         <CameraIcon className="w-5 h-5" />
                     </a>
                     <a
-                        href="mailto:support@telestore.com"
+                        href="mailto:ekqiu@duck.com"
                         aria-label="Email"
                         className="hover:text-gray-400"
                     >
                         <EnvelopeIcon className="w-5 h-5" />
                     </a>
                 </div>
-                <span className="text-xs text-gray-400">support@telestore.com</span>
+                <span className="text-xs text-gray-400">ekqiu@duck.com</span>
             </div>
         </footer>
     );

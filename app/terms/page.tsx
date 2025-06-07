@@ -80,10 +80,10 @@ export default function Page() {
           <p className="text-gray-700">
             For any questions or concerns, please contact us at:{' '}
             <a
-              href="mailto:your-email@example.com"
+              href="mailto:ekqiu@duck.com"
               className="text-blue-600 underline hover:text-blue-800"
             >
-              your-email@example.com
+              ekqiu@duck.com
             </a>
           </p>
         </section>

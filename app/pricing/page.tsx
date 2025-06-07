@@ -98,7 +98,7 @@ export default function Page() {
                 ))}
               </ul>
               <Link
-                href={plan.name === 'Enterprise' ? 'mailto:help@evankhee.com' : '/signup'}
+                href={plan.name === 'Enterprise' ? 'mailto:ekqiu@duck.com' : '/signup'}
                 className={`flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-sm font-medium transition-colors ${
                   plan.highlight
                     ? 'bg-blue-500 text-white hover:bg-blue-600'
@@ -112,7 +112,7 @@ export default function Page() {
           ))}
         </div>
         <p className="text-gray-400 text-xs mt-8 text-center">
-          Need a custom plan? <a href="mailto:help@evankhee.com" className="text-blue-500 underline">Contact us</a>
+          Need a custom plan? <a href="mailto:ekqiu@duck.com" className="text-blue-500 underline">Contact us</a>
         </p>
       </section>
       <Footer />

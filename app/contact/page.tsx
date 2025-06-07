@@ -16,8 +16,8 @@ export default function Page() {
           <div className="space-y-6 w-full">
             <div className="flex items-center justify-center gap-3">
               <EnvelopeIcon className="w-6 h-6 text-blue-500" />
-              <a href="mailto:help@evankhee.com" className="text-blue-600 underline">
-                help@evankhee.com
+              <a href="mailto:ekqiu@duck.com" className="text-blue-600 underline">
+                ekqiu@duck.com
               </a>
             </div>
             <div className="flex items-center justify-center gap-3">

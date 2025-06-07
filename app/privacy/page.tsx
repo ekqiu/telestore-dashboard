@@ -7,7 +7,7 @@ import Header from '@/app/ui/header';
 import Footer from '@/app/ui/footer';
 
 export const metadata: Metadata = {
-  title: 'Terms and Conditions',
+  title: 'Privacy Policy',
 };
 
 export default function Page() {
@@ -17,73 +17,81 @@ export default function Page() {
 
       <div className="max-w-3xl mx-auto w-full pt-8">
         <h1 className={`${lusitana.className} mb-6 text-4xl font-extrabold text-center`}>
-          Terms and Conditions
+          Privacy Policy
         </h1>
         <p className="mb-8 text-lg text-gray-700 text-center">
-          Welcome to TeleStore. By accessing or using our platform, you agree to the following terms and conditions. Please read them carefully.
+          Your privacy is important to us. This Privacy Policy explains how TeleStore collects, uses, and protects your personal information when you use our platform.
         </p>
 
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold mt-8 mb-3">1. Service Overview</h2>
-          <p className="text-gray-700">
-            TeleStore provides a platform for users in Singapore to list products and manage their business online. The platform is owned and operated by an individual.
-          </p>
-        </section>
-
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold mt-8 mb-3">2. User Responsibilities</h2>
+          <h2 className="text-2xl font-semibold mt-8 mb-3">1. Information We Collect</h2>
           <ul className="list-disc pl-8 space-y-2 text-gray-700">
-            <li>Provide accurate and complete information when registering and listing products.</li>
-            <li>You are responsible for all activities under your account.</li>
-            <li>All products listed must comply with Singaporean laws and regulations.</li>
+            <li>
+              <strong>Account Information:</strong> When you register, we collect your name, email address, and other necessary details.
+            </li>
+            <li>
+              <strong>Usage Data:</strong> We collect information about how you use our platform, such as pages visited and actions taken.
+            </li>
+            <li>
+              <strong>Communications:</strong> If you contact us, we may keep a record of that correspondence.
+            </li>
           </ul>
         </section>
 
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold mt-8 mb-3">3. Prohibited Activities</h2>
+          <h2 className="text-2xl font-semibold mt-8 mb-3">2. How We Use Your Information</h2>
           <ul className="list-disc pl-8 space-y-2 text-gray-700">
-            <li>No illegal, fraudulent, or misleading listings are allowed.</li>
-            <li>No spam, abusive, or harmful behavior is permitted on the platform.</li>
+            <li>To provide and maintain our services.</li>
+            <li>To communicate with you about your account or our services.</li>
+            <li>To improve and personalize your experience on the platform.</li>
+            <li>To comply with legal obligations.</li>
           </ul>
         </section>
 
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold mt-8 mb-3">4. Refunds and Warranties</h2>
+          <h2 className="text-2xl font-semibold mt-8 mb-3">3. Sharing of Information</h2>
           <p className="text-gray-700">
-            TeleStore acts only as a platform provider and does not guarantee or warrant any products listed by users. Refunds, returns, and warranties are the responsibility of individual sellers.
+            We do not sell or rent your personal information to third parties. We may share your information only as required by law or to protect our rights.
           </p>
         </section>
 
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold mt-8 mb-3">5. Privacy</h2>
+          <h2 className="text-2xl font-semibold mt-8 mb-3">4. Data Security</h2>
           <p className="text-gray-700">
-            Your personal information will be handled in accordance with Singapore's Personal Data Protection Act (PDPA). We do not share your information with third parties except as required by law.
+            We implement reasonable security measures to protect your personal information from unauthorized access, disclosure, or loss.
           </p>
         </section>
 
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold mt-8 mb-3">6. Limitation of Liability</h2>
+          <h2 className="text-2xl font-semibold mt-8 mb-3">5. Cookies</h2>
           <p className="text-gray-700">
-            TeleStore is not liable for any damages or losses resulting from your use of the platform or from transactions between users.
+            TeleStore may use cookies and similar technologies to enhance your experience and analyze usage of our platform. You can control cookies through your browser settings.
           </p>
         </section>
 
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold mt-8 mb-3">7. Changes to Terms</h2>
+          <h2 className="text-2xl font-semibold mt-8 mb-3">6. Your Rights</h2>
           <p className="text-gray-700">
-            We may update these terms from time to time. Continued use of the platform constitutes acceptance of the revised terms.
+            You have the right to access, correct, or delete your personal information. Please contact us if you wish to exercise these rights.
           </p>
         </section>
 
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold mt-8 mb-3">8. Contact</h2>
+          <h2 className="text-2xl font-semibold mt-8 mb-3">7. Changes to This Policy</h2>
           <p className="text-gray-700">
-            For any questions or concerns, please contact us at:{' '}
+            We may update this Privacy Policy from time to time. We will notify you of any significant changes by posting the new policy on this page.
+          </p>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mt-8 mb-3">8. Contact Us</h2>
+          <p className="text-gray-700">
+            If you have any questions or concerns about this Privacy Policy, please contact us at:{' '}
             <a
               href="mailto:your-email@example.com"
               className="text-blue-600 underline hover:text-blue-800"
             >
-              your-email@example.com
+              ekqiu@duck.com
             </a>
           </p>
         </section>
