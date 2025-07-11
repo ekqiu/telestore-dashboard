@@ -9,7 +9,7 @@ import { fetchInvoicesPages } from '@/app/lib/data'
 import { Metadata } from 'next'; 
 
 export const metadata: Metadata = {
-  title: 'orders',
+  title: 'Orders',
 };
 
 export default async function Page(props: {

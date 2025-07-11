@@ -112,7 +112,7 @@ export default function Page() {
           ))}
         </div>
         <p className="text-gray-400 text-xs mt-8 text-center">
-          Need a custom plan? <a href="mailto:ekqiu@duck.com" className="text-blue-500 underline">Contact us</a>
+          Need a custom plan? <a href="/contact" className="text-blue-500 underline">Contact us</a>
         </p>
       </section>
       <Footer />

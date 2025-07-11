@@ -13,7 +13,7 @@ export default function Page() {
     <main className="flex min-h-screen flex-col p-6">
       <Header />
       <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
-        <div className="group relative bg-gradient-to-br from-blue-50 to-white rounded-2xl shadow-lg px-6 py-10 md:w-2/5 md:px-20 flex flex-col justify-center gap-6 transition-transform">
+        <div className="group relative px-6 py-10 md:w-2/5 md:px-30 flex flex-col justify-center gap-6 transition-transform">
 
           <p className="mt-8 text-xl text-gray-800 md:text-2xl md:leading-normal text-center">
         <strong>Welcome to the future of e-commerce.</strong> Manage your business with ease, and deploy your store onto Telegram at no cost.

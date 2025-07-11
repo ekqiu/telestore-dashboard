@@ -64,8 +64,7 @@ export type CustomersTableType = {
   name: string;
   telegram: string;
   image_url: string;
-  total_invoices: number;
-  total_processed: number;
+  total_spent: number;
   total_sent: number;
 };
 

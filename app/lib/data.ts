@@ -212,6 +212,8 @@ export async function fetchCustomers() {
 
 export async function fetchFilteredCustomers(query: string) {
   try {
+    const user = await getCurrentUser();
+    const organisationId = user?.organisation_id;
     const data = await sql<CustomersTableType>`
 		SELECT
 		  customers.id,
@@ -219,21 +221,25 @@ export async function fetchFilteredCustomers(query: string) {
 		  customers.telegram,
 		  customers.image_url,
 		  COUNT(invoices.id) AS total_invoices,
-		  SUM(CASE WHEN invoices.status = 'processed' THEN invoices.amount ELSE 0 END) AS total_processed,
-		  SUM(CASE WHEN invoices.status = 'sent' THEN invoices.amount ELSE 0 END) AS total_sent
-		FROM customers
+		  SUM(CASE WHEN invoices.status = 'confirmed' THEN invoices.amount
+      WHEN invoices.status  = 'processing' THEN invoices.amount
+      WHEN invoices.status = 'shipped' THEN invoices.amount
+      WHEN invoices.status = 'delivered' THEN invoices.amount 
+      ELSE 0 END) AS total_spent
+      FROM customers
 		LEFT JOIN invoices ON customers.id = invoices.customer_id
 		WHERE
+     invoices.organisation_id = ${organisationId} AND (
 		  customers.name ILIKE ${`%${query}%`} OR
         customers.telegram ILIKE ${`%${query}%`}
+  )
 		GROUP BY customers.id, customers.name, customers.telegram, customers.image_url
 		ORDER BY customers.name ASC
 	  `;
 
     const customers = data.rows.map((customer) => ({
       ...customer,
-      total_processed: formatCurrency(customer.total_processed),
-      total_sent: formatCurrency(customer.total_sent),
+      total: formatCurrency(customer.total_spent),
     }));
 
     return customers;
