@@ -41,6 +41,7 @@ export type LatestInvoice = {
   image_url: string;
   telegram: string;
   amount: string;
+  status: 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled' | 'returned' | 'refunded';
 };
 
 // The database returns a number for amount, but we later format it to a string with the formatCurrency function

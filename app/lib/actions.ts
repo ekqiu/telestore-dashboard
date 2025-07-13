@@ -4,7 +4,7 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import { signIn, getUser } from '@/auth';
+import { signIn, getUser, getCurrentUser } from '@/auth';
 import { AuthError } from 'next-auth';
 import { register } from '@/register';
 
@@ -91,12 +91,14 @@ export async function createInvoice(prevState: State, formData: FormData) {
   const { customerId, amount, status } = validatedFields.data;
   const amountInCents = amount * 100;
   const date = new Date().toISOString().split('T')[0];
- 
+  const user = await getCurrentUser();
+  const organisationId = user?.organisation_id;
+
   // Insert data into the database
   try {
     await sql`
-      INSERT INTO invoices (customer_id, amount, status, date)
-      VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
+      INSERT INTO invoices (customer_id, amount, status, date, organisation_id)
+      VALUES (${customerId}, ${amountInCents}, ${status}, ${date}, ${organisationId})
     `;
   } catch (error) {
     // If a database error occurs, return a more specific error.
@@ -149,4 +151,46 @@ export async function deleteInvoice(id: string) {
 
     await sql`DELETE FROM invoices WHERE id = ${id}`;
     revalidatePath('/dashboard/orders');
+}
+
+
+const CreateCustomer = z.object({
+  name: z.string().min(1, { message: 'Please enter a name.' }),
+  telegram: z.string().min(1, { message: 'Please enter a Telegram handle.' }),
+});
+
+export async function createCustomer(prevState: State, formData: FormData) {
+  // Validate form using Zod
+  const validatedFields = CreateCustomer.safeParse({
+    name: formData.get('name'),
+    telegram: formData.get('telegram'),
+  });
+
+  // If form validation fails, return errors early. Otherwise, continue.
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create Customer.',
+    };
+  }
+
+  // Prepare data for insertion into the database
+  const { name, telegram } = validatedFields.data;
+
+  // Insert data into the database
+  try {
+    await sql`
+      INSERT INTO customers (name, telegram)
+      VALUES (${name}, ${telegram})
+    `;
+  } catch (error) {
+    // If a database error occurs, return a more specific error.
+    return {
+      message: 'Database Error: ', error,
+    };
+  }
+
+  // Revalidate the cache for the customers page and redirect the user.
+  revalidatePath('/dashboard/customers');
+  redirect('/dashboard/customers');
 }

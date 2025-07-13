@@ -1,15 +1,16 @@
 import Image from 'next/image';
 // instead of updaeinvoice, deleteinvoice, write for viewinvoices and delete customer(which will need to convert their orders into ghost orders)
-import { UpdateInvoice, DeleteInvoice } from '@/app/ui/orders/buttons';
+import { ViewInvoices, DeleteCustomer } from '@/app/ui/customers/buttons';
 import { fetchFilteredCustomers } from '@/app/lib/data';
 
 export default async function CustomersTable({
   query,
+  currentPage,
 }: {
   query: string;
   currentPage: number;
 }) {
-  const invoices = await fetchFilteredCustomers(query);
+  const invoices = await fetchFilteredCustomers(query, currentPage);
 
   //pagination doesnt work for customers
 
@@ -45,8 +46,8 @@ export default async function CustomersTable({
                     </p>
                   </div>
                   <div className="flex justify-end gap-2">
-                    <UpdateInvoice id={invoice.id} />
-                    <DeleteInvoice id={invoice.id} />
+                    <ViewInvoices id={invoice.id} />
+                    <DeleteCustomer id={invoice.id} />
                   </div>
                 </div>
               </div>
@@ -95,8 +96,8 @@ export default async function CustomersTable({
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">
-                      <UpdateInvoice id={invoice.id} />
-                      <DeleteInvoice id={invoice.id} />
+                      <ViewInvoices id={invoice.id} />
+                      <DeleteCustomer id={invoice.id} />
                     </div>
                   </td>
                 </tr>

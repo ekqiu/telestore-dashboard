@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import { lusitana } from '@/app/ui/fonts';
 import {fetchLatestInvoices} from '@/app/lib/data';
+import InvoiceStatus from '@/app/ui/orders/status';
 
 export default async function LatestInvoices(){
   const latestInvoices = await fetchLatestInvoices();
@@ -43,11 +44,14 @@ export default async function LatestInvoices(){
                     </p>
                   </div>
                 </div>
+                <div className="flex items-center gap-2">
+                <InvoiceStatus status={invoice.status} />
                 <p
                   className={`${lusitana.className} truncate text-sm font-medium md:text-base`}
                 >
                   {invoice.amount}
                 </p>
+                </div>
               </div>
             );
           })}

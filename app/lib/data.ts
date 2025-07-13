@@ -26,7 +26,7 @@ export async function fetchLatestInvoices() {
     const user = await getCurrentUser();
     const organisationId = user?.organisation_id;
     const data = await sql<LatestInvoiceRaw>`
-      SELECT invoices.amount, customers.name, customers.image_url, customers.telegram, invoices.id
+      SELECT invoices.amount, customers.name, customers.image_url, customers.telegram, invoices.id, invoices.status
       FROM invoices
       JOIN customers ON invoices.customer_id = customers.id
       WHERE invoices.organisation_id = ${organisationId}
@@ -210,10 +210,12 @@ export async function fetchCustomers() {
   }
 }
 
-export async function fetchFilteredCustomers(query: string) {
+export async function fetchFilteredCustomers(query: string, currentPage: number,) {
+  const offset = (currentPage - 1) * ITEMS_PER_PAGE;
   try {
     const user = await getCurrentUser();
     const organisationId = user?.organisation_id;
+    
     const data = await sql<CustomersTableType>`
 		SELECT
 		  customers.id,
@@ -235,6 +237,7 @@ export async function fetchFilteredCustomers(query: string) {
   )
 		GROUP BY customers.id, customers.name, customers.telegram, customers.image_url
 		ORDER BY customers.name ASC
+    LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
 	  `;
 
     const customers = data.rows.map((customer) => ({
@@ -246,5 +249,31 @@ export async function fetchFilteredCustomers(query: string) {
   } catch (err) {
     console.error('Database Error:', err);
     throw new Error('Failed to fetch customer table.');
+  }
+}
+
+
+export async function fetchCustomersPages(query: string) {
+  try {
+    const user = await getCurrentUser();
+    const organisationId = user?.organisation_id;
+
+    const count = await sql`
+      SELECT COUNT(DISTINCT customers.id)
+      FROM customers
+      LEFT JOIN invoices ON customers.id = invoices.customer_id
+      WHERE
+        invoices.organisation_id = ${organisationId} AND (
+          customers.name ILIKE ${`%${query}%`} OR
+          customers.telegram ILIKE ${`%${query}%`}
+        )
+    `;
+
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of invoices.');
   }
 }
