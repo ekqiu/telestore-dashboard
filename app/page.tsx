@@ -4,9 +4,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Header from '@/app/ui/header';
 import Footer from '@/app/ui/footer';
+import { Metadata } from 'next';
 // Import Heroicons
 import { RocketLaunchIcon, ShieldCheckIcon, PaperAirplaneIcon, AcademicCapIcon, SparklesIcon } from '@heroicons/react/24/outline';
 import TestimonialsCarousel from '@/app/ui/testimonialscarousel';
+
+export const metadata: Metadata = {
+  title: 'Home',
+};
 
 export default function Page() {
   return (

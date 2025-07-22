@@ -2,6 +2,12 @@ import TeleStoreLogo from '@/app/ui/telestore-logo';
 import { lusitana } from '@/app/ui/fonts';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'View Customer',
+};
+
 export default function LoginPage() {
   return (
     <main className="flex items-center justify-center md:h-screen">

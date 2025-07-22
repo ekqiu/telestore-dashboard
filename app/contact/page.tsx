@@ -2,6 +2,11 @@ import Header from '@/app/ui/header';
 import Footer from '@/app/ui/footer';
 import { EnvelopeIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { CameraIcon } from '@heroicons/react/24/solid';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Contact Us',
+};
 
 export default function Page() {
   return (

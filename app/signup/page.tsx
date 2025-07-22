@@ -1,7 +1,12 @@
 import TeleStoreLogo from '@/app/ui/telestore-logo';
 import SignUpForm from '@/app/ui/signup-form';
 import LoginLink from '@/app/ui/login-link';
- 
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Sign Up',
+};
+
 export default function SignUpPage() {
   return (
     <main className="flex items-center justify-center md:h-screen">
