@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import Header from '@/app/ui/header';
+import HeaderStatic from '@/app/ui/header-static';
 import Footer from '@/app/ui/footer';
 import { Metadata } from 'next';
 // Import Heroicons
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <main className="flex min-h-screen flex-col p-6">
-      <Header />
+      <HeaderStatic />
       <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
         <div className="group relative px-6 py-10 md:w-2/5 md:px-30 flex flex-col justify-center gap-6 transition-transform">
 

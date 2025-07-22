@@ -10,6 +10,7 @@ import Header from '@/app/ui/header';
 export const metadata: Metadata = {
   title: '404',
 };
+
 export default function Page() {
   return (
     <main className="flex min-h-screen flex-col p-6">
