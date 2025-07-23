@@ -2,13 +2,8 @@ import TeleStoreLogo from '@/app/ui/telestore-logo';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import { lusitana } from '@/app/ui/fonts';
-import { Metadata } from 'next';
 import Header from '@/app/ui/header';
 import Footer from '@/app/ui/footer';
-
-export const metadata: Metadata = {
-  title: 'Terms and Conditions',
-};
 
 export default function Page() {
   return (

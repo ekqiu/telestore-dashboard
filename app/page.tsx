@@ -2,21 +2,16 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import HeaderStatic from '@/app/ui/header-static';
+import Header from '@/app/ui/header';
 import Footer from '@/app/ui/footer';
-import { Metadata } from 'next';
 // Import Heroicons
 import { RocketLaunchIcon, ShieldCheckIcon, PaperAirplaneIcon, AcademicCapIcon, SparklesIcon } from '@heroicons/react/24/outline';
 import TestimonialsCarousel from '@/app/ui/testimonialscarousel';
 
-export const metadata: Metadata = {
-  title: 'Home',
-};
-
 export default function Page() {
   return (
     <main className="flex min-h-screen flex-col p-6">
-      <HeaderStatic />
+      <Header />
       <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
         <div className="group relative px-6 py-10 md:w-2/5 md:px-30 flex flex-col justify-center gap-6 transition-transform">
 
